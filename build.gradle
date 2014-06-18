@@ -1,0 +1,39 @@
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+buildscript {
+   repositories {
+      mavenCentral()
+   }
+   dependencies {
+      classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.2.RELEASE")
+   }
+}
+
+repositories {
+   mavenCentral()
+}
+
+dependencies {
+   // Groovy
+   compile 'org.codehaus.groovy:groovy-all:2.3.2'
+   // Logging
+   compile 'org.slf4j:slf4j-api:1.7.5'
+   // Spring boot && jetty
+   compile "org.springframework.boot:spring-boot-starter-web"
+   // Testing
+   testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+   testRuntime 'cglib:cglib-nodep:3.1'
+   compile files('./lib/spock-reports-1.1.jar')
+   //  testCompile 'com.athaydes:spock-reports:1.0'
+}
+
+// Tomcat 8
+configurations.all {
+   resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+      if (details.requested.group == 'org.apache.tomcat.embed') {
+         details.useVersion '8.0.3'
+      }
+   }
+}
