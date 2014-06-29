@@ -10,7 +10,6 @@ class LogEntryControllerSpec extends Specification {
 
    def controller
    ActionLogEntry logEntry
-   ResponseEntity response
 
    def setup() {
       controller = Spy(LogEntryController)
@@ -26,7 +25,7 @@ class LogEntryControllerSpec extends Specification {
       and: 'an OK response is given'
          response.statusCode == OK
       and: 'the response body contain the string representation of the added entry'
-         response.body == logEntry.toString() + '30'
+         response.body == logEntry.toString()
    }
 
 }
